@@ -3,7 +3,7 @@ from rest_framework import viewsets, generics
 from jl.serializers import JLItemSerializer, JLCategorySerializer, JLCategoryFullSerializer, JLItemFullSerializer
 from jl.models import JLCategory, JLItem
 
-from datetime import date
+from datetime import datetime
 
 
 class JLCategoryViewSet(viewsets.ModelViewSet):
@@ -13,7 +13,7 @@ class JLCategoryViewSet(viewsets.ModelViewSet):
 
 class JLItemViewSet(viewsets.ModelViewSet):
     queryset = JLItem.objects.all()
-    serializer_class = JLItemFullSerializer
+    serializer_class = JLItemSerializer
 
 
 class TodaysListView(generics.ListAPIView):
@@ -21,13 +21,11 @@ class TodaysListView(generics.ListAPIView):
 
 
     def get_queryset(self):
-        year = self.kwargs.get('year', None)
-        month = self.kwargs.get('month', None)
-        day = self.kwargs.get('day', None)
-
-        if year is None or month is None or day is None:
-            thedate = date.today()
+        # Querystring Date is formatted as yyyymmdd
+        query_date = self.request.QUERY_PARAMS.get('d', None)
+        if query_date is not None:
+            thedate = datetime.strptime(query_date, "%Y%m%d").date()
         else:
-            thedate = date(int(year), int(month), int(day))
+            thedate = date.today()
 
         return JLCategory.objects.filter(items__pub_date=thedate)

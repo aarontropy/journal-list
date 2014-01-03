@@ -3,9 +3,13 @@
 <head>
     <title>Journal List</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/JLApp/app.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-resource.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-cookies.js"></script>
+    <script type="text/javascript" src="{% static "js/JLApp/app.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/moment.min.js" %}"></script>
 
     <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}">
 
 </head>
 <body ng-controller="JLCtrl">
@@ -32,13 +36,23 @@
 
 
 
+<div class="row" ng-repeat="cat in JLItems">
+    <div class="col-md-4">
+        <p class="jlist-category">{[{ cat.category_text }]}</p>
+    </div>
 
+    <div class="col-md-8">
 
-<div ng-repeat="cat in JLItems">
-    <h2>{[{ cat.category_text }]}</h2>
-    <ul>
-        <li ng-repeat="item in cat.items">{[{item.item_text}]}</li>
-    </ul>
+        <ul class="jlist-items" ng-repeat="item in cat.items">
+            <li ng-repeat="item in cat.items">
+                <span ng-hide="editing" ng-dblclick="editing=true">{[{item.item_text}]}</span>
+                <form ng-show="editing" ng-submit="editing=false; test($parent.$index, $index);">
+                    <input type="text" ng-model="item.item_text" /><button class="btn" type="submit">Save</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
 </div>
 
 </body>

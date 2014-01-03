@@ -8,10 +8,11 @@ class JLCategorySerializer(serializers.HyperlinkedModelSerializer):
 
 
 class JLItemSerializer(serializers.HyperlinkedModelSerializer):
+    # category = serializers.PrimaryKeyRelatedField()
+    
     class Meta:
         model = JLItem
-        fields = ('id', 'url', 'item_text', 'pub_date',)
-        depth = 1
+        fields = ('id', 'url', 'item_text', 'pub_date', 'category')
 
 
 class JLItemFullSerializer(serializers.HyperlinkedModelSerializer):

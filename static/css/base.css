@@ -1,0 +1,14 @@
+.jlist-category {
+    font-size: 24px;
+}
+
+.jlist-items {
+    list-style: none;
+}
+
+.jlist-items li {
+    font-size: 24px;
+    border-top: 1px dotted #ccc;
+    border-bottom: 1px dotted #ccc;
+}
+
