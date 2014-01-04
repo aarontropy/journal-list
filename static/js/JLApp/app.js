@@ -31,6 +31,28 @@ JLApp.directive('ngEnter', function () {
 });
 
 
+// Directive for setting focus op an element
+JLApp.directive('focusMe', function ($timeout, $parse) {
+    return {
+        link: function (scope, element, attrs) {
+            var model = $parse(attrs.focusMe);
+            scope.$watch(model, function(value) {
+                if(value) {
+                    $timeout(function() {
+                        element[0].focus();
+                    });
+                }
+            });
+
+            element.bind('blur', function() {
+                scope.$apply(model.assign(scope, false));
+            });
+        }
+    };
+});
+
+
+
 // $JLItem = JLApp.factory('JLItem', ['$resource', function($resource) {
 //     return $resource('api/items/:id/', {}, {
 //         get: { method: 'GET' },
@@ -78,6 +100,7 @@ JLApp.controller('JLCtrl', function($scope, $http, Restangular) {
 
     $scope.editItem = function(catIndex, itemIndex) {
         var item = $scope.JLItems[catIndex].items[itemIndex];
+        console.log(item);
         Restangular.one('items', item.id).get().then(function(ret) {
             ret.item_text = item.item_text;
             ret.put();

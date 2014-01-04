@@ -53,10 +53,10 @@
 
     <div class="col-md-8">
         <ul class="jlist-items">
-            <li ng-repeat="item in cat.items" ng-dblclick="editing=true">
-                <span ng-hide="editing">{[{item.item_text}]}</span>
-                <form ng-show="editing" ng-enter="editing=false; editItem($parent.$index, $index);">
-                    <input type="text" ng-model="item.item_text" />
+            <li ng-repeat="item in cat.items" ng-dblclick="item.editing=true">
+                <span ng-hide="item.editing">{[{item.item_text}]}</span>
+                <form ng-show="item.editing" ng-enter="item.editing=false; editItem($parent.$index, $index);">
+                    <input type="text" ng-model="item.item_text" ng-blur="item.editing=false" focus-me="item.editing" />
                 </form>
             </li>
             <li>
