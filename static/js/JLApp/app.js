@@ -99,7 +99,7 @@ JLApp.controller('JLCtrl', function($scope, $http, Restangular) {
     $scope.addCategory = function() {
         // is this category already on the page?
         cat = _.find($scope.JLItems, function(c) {
-            return c.category_text == $scope.new_category;
+            return c.category_text.toLowerCase() == $scope.new_category.toLowerCase();
         });
 
         if (cat !== undefined) {
