@@ -61,7 +61,7 @@
             </li>
             <li>
                 <form ng-enter="addItem(cat)">
-                    <i class="glyphicon glyphicon-chevron-right"></i><input type="text" ng-model="cat.newItem" />
+                    <i class="glyphicon glyphicon-chevron-right"></i><input type="text" ng-model="cat.newItem" focus-me="cat.isNew" />
                 </form>
             </li>
         </ul>

@@ -127,6 +127,7 @@ JLApp.controller('JLCtrl', function($scope, $http, Restangular) {
 
         if (cat !== undefined) {
             // If it is, do nothing for now, later, set focus on the input form
+            cat.isNew = true;
             $scope.new_category = '';
         } else {
             // If it is not, does the category already exist on the database?
@@ -135,11 +136,13 @@ JLApp.controller('JLCtrl', function($scope, $http, Restangular) {
                 if (c.length == 0) {
                     // if it does not, create it.
                     Restangular.all('categories').post({category_text: $scope.new_category}).then( function(newc) {
+                        newc.isNew = true;
                         $scope.JLItems.push(newc);
                         $scope.new_category = '';
                     });
                 } else {
                     // otherwise, add it to the list of categories
+                    c[0].isNew = true;
                     $scope.JLItems.push(c[0]);
                     $scope.new_category = '';
                 }
