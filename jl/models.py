@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from datetime import date
 
 class JLCategory(models.Model):
     category_text = models.CharField(max_length=150)
@@ -17,7 +18,12 @@ class JLItem(models.Model):
     category = models.ForeignKey(JLCategory, related_name='items')
 
     item_text = models.CharField(max_length=500)
-    pub_date = models.DateField(auto_now_add=True)
+    pub_date = models.DateField(blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.id and self.pub_date is None:
+            self.pub_date = date.today()
+        super(JLItem, self).save(*args, **kwargs)
 
     def __unicode__(self):
         if len(self.item_text) > 50:

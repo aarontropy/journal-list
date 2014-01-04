@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets, generics, filters
-from jl.serializers import JLItemSerializer, JLCategorySerializer, JLCategoryFullSerializer, JLItemFullSerializer
+from jl.serializers import JLItemSerializer, JLCategorySerializer, JLCategoryFullSerializer, JLItemFullSerializer, DailyItemsSerializer
 from jl.models import JLCategory, JLItem
 
 from datetime import datetime, date
@@ -19,15 +19,15 @@ class JLItemViewSet(viewsets.ModelViewSet):
 
 
 class TodaysListView(generics.ListAPIView):
-    serializer_class = JLCategoryFullSerializer
+    serializer_class = DailyItemsSerializer
 
 
     def get_queryset(self):
         # Querystring Date is formatted as yyyymmdd
         query_date = self.request.QUERY_PARAMS.get('d', None)
         if query_date is not None:
-            thedate = datetime.strptime(query_date, "%Y%m%d").date()
+            self.date = datetime.strptime(query_date, "%Y%m%d").date()
         else:
-            thedate = date.today()
+            self.date = date.today()
 
-        return JLCategory.objects.filter(items__pub_date=thedate)
+        return JLCategory.objects.filter(items__pub_date=self.date).distinct()

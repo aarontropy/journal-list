@@ -10,5 +10,27 @@
     font-size: 24px;
     border-top: 1px dotted #ccc;
     border-bottom: 1px dotted #ccc;
+    padding-left: 30px;
+    background: #eee;
+    width: 100%;
+}
+
+.jlist-items li i {
+    margin-left: -30px;
+}
+
+.jlist-items li:last-child {
+    background: #ffa;
+}
+
+.jlist-items li form {
+    padding: 0;
+    display: inline;
+}
+
+.jlist-items li input {
+    border: none;
+    width: 100%;
+    display: inline;
 }
 

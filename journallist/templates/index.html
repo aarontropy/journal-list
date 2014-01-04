@@ -29,9 +29,9 @@
 
     <div class="collapse navbar-collapse" id="journallist-navbar-collapse-1">
         <ul class="nav navbar-nav">
-            <li><button type="button" ng-click="decreaseDate()" class="btn btn-default navbar-btn">&lt;</button></li>
+            <li><button type="button" ng-click="changeDate(-1)" class="btn btn-default navbar-btn">&lt;</button></li>
             <li><p class="navbar-text">{[{getDateString()}]}</p></li>
-            <li><button type="button" ng-click="increaseDate()" class="btn btn-default navbar-btn">&gt;</button></li>
+            <li><button type="button" ng-click="changeDate(1)" class="btn btn-default navbar-btn">&gt;</button></li>
         </ul>
     </div>
 </nav>
@@ -52,17 +52,19 @@
     </div>
 
     <div class="col-md-8">
-        <ul class="jlist-items" ng-repeat="item in cat.items">
-            <li ng-repeat="item in cat.items">
-                <span ng-hide="editing" ng-dblclick="editing=true">{[{item.item_text}]}</span>
-                <form ng-show="editing" ng-submit="editing=false; editItem($parent.$index, $index);">
-                    <input type="text" ng-model="item.item_text" /><button class="btn" type="submit">Save</button>
+        <ul class="jlist-items">
+            <li ng-repeat="item in cat.items" ng-dblclick="editing=true">
+                <span ng-hide="editing">{[{item.item_text}]}</span>
+                <form ng-show="editing" ng-enter="editing=false; editItem($parent.$index, $index);">
+                    <input type="text" ng-model="item.item_text" />
+                </form>
+            </li>
+            <li>
+                <form ng-enter="addItem(cat)">
+                    <i class="glyphicon glyphicon-chevron-right"></i><input type="text" ng-model="cat.newItem" />
                 </form>
             </li>
         </ul>
-        <form ng-submit="addItem(cat)">
-            <input type="text" ng-model="newItem" /><button class="btn" type="submit">Save</button>
-        </form>
     </div>
 
 </div>

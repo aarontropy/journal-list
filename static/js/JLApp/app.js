@@ -4,6 +4,7 @@ var JLApp = angular.module("JournalList", ['ngCookies', 'restangular'])
         $interpolateProvider.endSymbol("}]}");
 
         RestangularProvider.setBaseUrl('/api');
+        RestangularProvider.setRequestSuffix('/');
 });
 
 
@@ -11,6 +12,24 @@ JLApp.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 }]);
+
+
+// Awesome directive shamelessly stolen from the similarly awesome EpokK
+// https://gist.github.com/EpokK
+JLApp.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.ngEnter);
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});
+
 
 // $JLItem = JLApp.factory('JLItem', ['$resource', function($resource) {
 //     return $resource('api/items/:id/', {}, {
@@ -46,31 +65,35 @@ JLApp.controller('JLCtrl', function($scope, $http, Restangular) {
         return $scope.current_date.format('MMMM Do YYYY');
     };
 
-    $scope.increaseDate = function() {
-        $scope.current_date.add('d', 1);
-        $scope.getItems();
-    };
-
-    $scope.decreaseDate = function() {
-        $scope.current_date.subtract('d', 1);
+    $scope.changeDate = function(increment) {
+        $scope.current_date.add('d', increment);
         $scope.getItems();
     };
 
     $scope.getItems = function() {
-        Restangular.all('d').getList({d: $scope.current_date.format('YYYYMMDD')}).then(function(catItems) {
+        Restangular.all('d/').getList({d: $scope.current_date.format('YYYYMMDD')}).then(function(catItems) {
             $scope.JLItems = catItems;
         });
     };
 
     $scope.editItem = function(catIndex, itemIndex) {
         var item = $scope.JLItems[catIndex].items[itemIndex];
-        console.log(item);
-        baseItems.one(item.id).patch(item);
+        Restangular.one('items', item.id).get().then(function(ret) {
+            ret.item_text = item.item_text;
+            ret.put();
+        })
     };
 
     $scope.addItem = function(cat) {
-        console.log(cat);
-        console.log($scope.newItem);
+        if (cat.newItem !== undefined && cat.newItem != '') {
+            var newItem = {
+                item_text: cat.newItem, 
+                category: cat.url, 
+                pub_date: $scope.current_date.format("YYYY-MM-DD")
+            };
+            baseItems.post(newItem);
+            $scope.getItems();
+        }
     };
 
     $scope.addCategory = function() {
