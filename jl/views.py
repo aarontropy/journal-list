@@ -6,10 +6,20 @@ from jl.models import JLCategory, JLItem
 from datetime import datetime, date
 
 
+class ExactSearchFilter(filters.SearchFilter):
+    def get_search_terms(self, request):
+        """
+        Search terms are set by a ?search=... query parameter,
+        and may be comma and/or whitespace delimited.
+        """
+        params = request.QUERY_PARAMS.get(self.search_param, '')
+        return [params] #.replace(',', ' ').split()
+
+
 class JLCategoryViewSet(viewsets.ModelViewSet):
     queryset = JLCategory.objects.all()
     serializer_class = JLCategorySerializer
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (ExactSearchFilter,)
     search_fields = ('=category_text',)
 
 
