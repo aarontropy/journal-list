@@ -4,12 +4,10 @@ from models import JLCategory, JLItem
 class JLCategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = JLCategory
-        fields = ('id', 'category_text',)
+        fields = ('id', 'url','category_text',)
 
 
 class JLItemSerializer(serializers.HyperlinkedModelSerializer):
-    # category = serializers.PrimaryKeyRelatedField()
-    
     class Meta:
         model = JLItem
         fields = ('id', 'url', 'item_text', 'pub_date', 'category')
@@ -26,5 +24,5 @@ class JLCategoryFullSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = JLCategory
-        fields = ('id', 'category_text', 'items',)
+        fields = ('id', 'url', 'category_text', 'items',)
     

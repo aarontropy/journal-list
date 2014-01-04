@@ -1,14 +1,16 @@
 from django.shortcuts import render
-from rest_framework import viewsets, generics
+from rest_framework import viewsets, generics, filters
 from jl.serializers import JLItemSerializer, JLCategorySerializer, JLCategoryFullSerializer, JLItemFullSerializer
 from jl.models import JLCategory, JLItem
 
-from datetime import datetime
+from datetime import datetime, date
 
 
 class JLCategoryViewSet(viewsets.ModelViewSet):
     queryset = JLCategory.objects.all()
     serializer_class = JLCategorySerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('=category_text',)
 
 
 class JLItemViewSet(viewsets.ModelViewSet):

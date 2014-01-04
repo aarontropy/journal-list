@@ -3,7 +3,9 @@
 <head>
     <title>Journal List</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+    <script type="text/javascript" src="{% static "js/underscore-min.js" %}"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-resource.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/restangular/latest/restangular.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-cookies.js"></script>
     <script type="text/javascript" src="{% static "js/JLApp/app.js" %}"></script>
     <script type="text/javascript" src="{% static "js/moment.min.js" %}"></script>
@@ -35,6 +37,14 @@
 </nav>
 
 
+<div class="row">
+    <div class="col-md-4">
+        <form ng-submit="addCategory()">
+            <input type="text" ng-model="new_category" /><button class="btn" type="submit">Save</button>
+        </form>
+    </div>
+</div>
+
 
 <div class="row" ng-repeat="cat in JLItems">
     <div class="col-md-4">
@@ -42,15 +52,17 @@
     </div>
 
     <div class="col-md-8">
-
         <ul class="jlist-items" ng-repeat="item in cat.items">
             <li ng-repeat="item in cat.items">
                 <span ng-hide="editing" ng-dblclick="editing=true">{[{item.item_text}]}</span>
-                <form ng-show="editing" ng-submit="editing=false; test($parent.$index, $index);">
+                <form ng-show="editing" ng-submit="editing=false; editItem($parent.$index, $index);">
                     <input type="text" ng-model="item.item_text" /><button class="btn" type="submit">Save</button>
                 </form>
             </li>
         </ul>
+        <form ng-submit="addItem(cat)">
+            <input type="text" ng-model="newItem" /><button class="btn" type="submit">Save</button>
+        </form>
     </div>
 
 </div>
