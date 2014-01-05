@@ -1,0 +1,70 @@
+body {
+    font-size: 24px;
+}
+
+form {
+    display: inline;
+    padding: 0px;
+}
+
+input {
+    border: none;
+    width: 100%;
+    display: inline;
+}
+
+#add-category {
+    padding: 0px 0px 5px 30px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 5px;
+    font-size: 24px;
+}
+
+#add-category i {
+    margin-left: -30px;
+}
+
+#add-category input {
+    background: #eee;
+}
+
+p.jlist-category {
+    padding-left: 30px;
+}
+
+.jlist-category {
+    font-size: 24px;
+}
+
+.jlist-items {
+    list-style: none;
+}
+
+.jlist-items li {
+    font-size: 24px;
+    border-top: 1px dotted #ccc;
+    border-bottom: 1px dotted #ccc;
+    padding-left: 30px;
+    background: #eee;
+    width: 100%;
+}
+
+.jlist-items li i {
+    margin-left: -30px;
+}
+
+.jlist-items li:last-child {
+    background: #ffa;
+}
+
+.jlist-items li form {
+    padding: 0;
+    display: inline;
+}
+
+.jlist-items li input {
+    border: none;
+    width: 100%;
+    display: inline;
+}
+
