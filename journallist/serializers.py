@@ -6,7 +6,7 @@ from models import JLCategory, JLItem
 class JLCategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = JLCategory
-        fields = ('id', 'url','category_text',)
+        fields = ('id', 'url','category_text', 'slug',)
 
 
 class JLItemSerializer(serializers.HyperlinkedModelSerializer):
