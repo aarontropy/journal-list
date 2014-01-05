@@ -93,7 +93,7 @@ JLApp.controller('JLCtrl', function($scope, $http, Restangular) {
     };
 
     $scope.getItems = function() {
-        Restangular.all('d/').getList({d: $scope.current_date.format('YYYYMMDD')}).then(function(catItems) {
+        Restangular.all('d').getList({d: $scope.current_date.format('YYYYMMDD')}).then(function(catItems) {
             $scope.JLItems = catItems;
         });
     };
