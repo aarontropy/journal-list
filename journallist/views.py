@@ -24,7 +24,6 @@ class ExactSearchFilter(filters.SearchFilter):
         Search terms are set by a ?search=... query parameter,
         and may be comma and/or whitespace delimited.
         """
-        print "searching..."
         params = request.QUERY_PARAMS.get(self.search_param, '')
         return [params] #.replace(',', ' ').split()
 
@@ -47,6 +46,7 @@ class TodaysListView(generics.ListAPIView):
 
     def get_queryset(self):
         # Querystring Date is formatted as yyyymmdd
+        print "wtf"
         query_date = self.request.QUERY_PARAMS.get('d', None)
         if query_date is not None:
             self.date = datetime.strptime(query_date, "%Y%m%d").date()

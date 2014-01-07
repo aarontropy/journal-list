@@ -3,7 +3,7 @@ var JLApp = angular.module("JournalList", ['ngCookies', 'restangular'])
         $interpolateProvider.startSymbol("{[{");
         $interpolateProvider.endSymbol("}]}");
 
-        RestangularProvider.setBaseUrl('/api');
+        RestangularProvider.setBaseUrl('api');
         RestangularProvider.setRequestSuffix('/');
 });
 

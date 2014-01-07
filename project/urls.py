@@ -7,5 +7,5 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^', include('journallist.urls')),
+    url(r'^journallist/', include('journallist.urls')),
 )
